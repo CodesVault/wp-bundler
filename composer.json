@@ -1,0 +1,33 @@
+{
+    "name": "codesvault/wp-bundler",
+    "description": "WP Bundler is a CLI tool. It can configure and run build process, and bundle zip(s) for WordPress plugins.",
+    "version": "0.0.1",
+    "minimum-stability": "stable",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "CodesVault\\Bundle\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Keramot UL Islam",
+            "email": "keramotul.islam@gmail.com"
+        },
+        {
+            "name": "CodesVault Team",
+            "email": "codesvault@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/finder": "^5.4",
+        "vlucas/phpdotenv": "^5.5",
+        "jolicode/jolinotif": "^2.6"
+    },
+    "config": {
+        "platform": {
+            "php": "8.1"
+        }
+    }
+}
