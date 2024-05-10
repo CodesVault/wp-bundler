@@ -20,7 +20,11 @@ WP Bundler is a CLI tool. It can configure and run build process, and bundle zip
 ### Using Composer
 
 <br>
-Run `composer require codesvault/wp-bundler --dev`.
+
+```bash
+composer require codesvault/wp-bundler --dev
+```
+
 <br>
 
 
