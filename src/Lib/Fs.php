@@ -96,8 +96,14 @@ class Fs
 
 		foreach ($files as $file) {
 			$file_path = $file->getRealPath();
+			$file_data = file_get_contents($file_path);
+			$file = fopen($file_path, 'w');
 
-			$this->updateFile($file_path, $data_ref);
+			foreach ($data_ref as $data) {
+				$file_data = str_replace($data['find'], $data['updated_data'], $file_data);
+			}
+			fwrite($file, $file_data, strlen($file_data));
+			fclose($file);
 		}
 
 		return $this;
