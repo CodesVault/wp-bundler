@@ -41,7 +41,6 @@ class Bundler extends Fs
         echo $this->notifier("{$zip_name}.zip created...");
 
 		echo $this->notifier("Smashed it! 💥", "warning");
-        $this->desktopNotifier("{$zip_name}.zip created! 🚀", 'Smashed it! 💥');
 
         return $this;
     }

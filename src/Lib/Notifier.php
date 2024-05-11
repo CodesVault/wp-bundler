@@ -15,21 +15,6 @@ trait Notifier
         return "\n{$color}{$msg}{$neutral}\n";
     }
 
-    private function desktopNotifier($body, $subtitle, $title = "WP Bundler")
-    {
-        $notifier = NotifierFactory::create();
-        $notify = new Notification();
-
-        $notification =
-        $notify
-        ->setTitle($title)
-        ->setBody($body)
-        ->setIcon(dirname(__DIR__, 2) . '/img/icon.png')
-        ->addOption('subtitle', $subtitle);
-
-        $notifier->send($notification);
-    }
-
     private function text_colors()
     {
         $colors = [
