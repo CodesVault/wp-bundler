@@ -117,33 +117,33 @@ Create a `bundler-schema.json` file in the root folder of your plugin.
 ```json
 {
   "kathamo": {
-		"path": "",
-		"extension": "php",
-		"schema": [
-			{
-				"target": "Plugin Name: Kathamo",
-				"template": "Plugin Name: Kathamo {{tier_name}}"
-			},
-			{
-				"target": "Version: 1.5.2",
-				"template": "Version: {{release_version}}"
-			},
+    "path": "",
+    "extension": "php",
+    "schema": [
+      {
+        "target": "Plugin Name: Kathamo",
+        "template": "Plugin Name: Kathamo {{tier_name}}"
+      },
+      {
+        "target": "Version: 1.5.2",
+        "template": "Version: {{release_version}}"
+      },
       {
           "target": "define('CV_VERSION', '1.5.2');",
           "template": "define('CV_VERSION', '{{release_version}}');"
       }
-		]
-	},
+    ]
+  },
   "README": {
-		"path": "",
-		"extension": "txt",
-		"schema": [
-			{
-				"target": "Version: 1.5.2",
-				"template": "Version: {{release_version}}"
-			}
-		]
-	}
+    "path": "",
+    "extension": "txt",
+    "schema": [
+      {
+        "target": "Version: 1.5.2",
+        "template": "Version: {{release_version}}"
+      }
+    ]
+  }
 }
 ```
 
