@@ -17,8 +17,7 @@ WP Bundler is a CLI tool. It can configure and run build process, and bundle zip
 ## Installation
 
 
-### Using Composer
-
+It is required to use composer to install WP Bundler.
 <br>
 
 ```bash
@@ -66,11 +65,10 @@ assets/dev
 
 ## Uses
 
-Now Let's add build pipeline in the above file like below. Then run `php bundler` to create a production zip.
+Now Let's add build pipeline in the above `bundler` file like below. Then from terminal run `php bundler` to create a production zip.
 
 
 ```php
-// file: bundler
 
 $bundler
     ->createProductionRepo('kathamo')
@@ -80,6 +78,10 @@ $bundler
     ->cleanUp()
     ->zip('kathamo');
 ```
+
+<br>
+
+It's creating a repo in the `/prod` folder then running build `command` then 'cleaning' up the repo based on `.distignore` and finally making a zip file.
 
 <br>
 
