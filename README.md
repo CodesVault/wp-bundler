@@ -81,7 +81,7 @@ $bundler
 
 <br>
 
-It's creating a repo in the `/prod` folder then running build `command` then 'cleaning' up the repo based on `.distignore` and finally making a zip file.
+It's creating a repo in the `/prod` folder then running build `command` then 'cleaning' up the repo based on `.distignore` and finally making a zip.
 
 <br>
 
@@ -91,14 +91,16 @@ You can also update specific file data before making zip using `updateFileConten
 
 <br>
 
-Update multiple files data using `findAndReplace` api.
+Update entire plugin file's data using `findAndReplace` api.
 
 ```php
 $bundler
   ->createProductionRepo('kathamo')
-  ->findAndReplace($folder_path, [
-    'old_data'      => "use Kathamo\\Bundle\\Bundler;",
-    'updated_data'  => "use CodesVault\\Kathamo\\Bundle\\Bundler;",
+  ->findAndReplace([
+    [
+      'find'          => "use Kathamo\\Bundle\\Bundler;",
+      'updated_data'  => "use CodesVault\\Kathamo\\Bundle\\Bundler;",
+    ]
   ])
   ->cleanUp()
   ->zip($zip_name);

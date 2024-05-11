@@ -5,6 +5,7 @@ namespace CodesVault\Bundle;
 use CodesVault\Bundle\Lib\Command;
 use CodesVault\Bundle\Lib\Fs;
 use CodesVault\Bundle\Lib\Notifier;
+use Symfony\Component\Finder\Finder;
 
 class Bundler extends Fs
 {
@@ -122,6 +123,16 @@ class Bundler extends Fs
 
         return $this;
     }
+
+	public function findAndReplace($data)
+	{
+		$finder = new Finder();
+        $files = $finder->in($this->prod_path)->files()->name('*.php');
+
+		$this->replaceAll($files, $data);
+
+		return $this;
+	}
 
 	public function executionTime()
 	{

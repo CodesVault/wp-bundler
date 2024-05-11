@@ -89,11 +89,8 @@ class Fs
 		return $this;
 	}
 
-	public function findAndReplace($path, $data_ref)
+	public function replaceAll($files, $data_ref)
 	{
-		$finder = new Finder();
-        $files = $finder->in($path)->files()->name('*.php');
-
 		foreach ($files as $file) {
 			$file_path = $file->getRealPath();
 			$file_data = file_get_contents($file_path);
