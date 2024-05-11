@@ -8,7 +8,7 @@ WP Bundler is a CLI tool. It can configure and run build process, and bundle zip
 
 ## Requirements
 - Environment: Mac, Linux.
-- PHP CLI 8.1 >=
+- PHP CLI 7.4 >=
 - Composer
 
 <br>

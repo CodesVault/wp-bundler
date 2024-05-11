@@ -22,12 +22,11 @@
     ],
     "require": {
         "symfony/finder": "^5.4",
-        "vlucas/phpdotenv": "^5.5",
-        "jolicode/jolinotif": "^2.6"
+        "vlucas/phpdotenv": "^5.5"
     },
     "config": {
         "platform": {
-            "php": "8.1"
+            "php": "7.4"
         }
     }
 }
