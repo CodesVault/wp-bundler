@@ -41,6 +41,12 @@ class Bundler extends Fs
         echo $this->notifier("{$zip_name}.zip created...");
 
 		echo $this->notifier("Smashed it! 💥", "warning");
+		echo $this->notifier("... ... .. \nPreparing next build...", "warning");
+
+		$schema_files = (new SchemaParser($this->path))->getSchemaFilesPath();
+		foreach ($schema_files as $file) {
+			$this->copy($this->path . "/$file", $this->prod_path . "/$file");
+		}
 
         return $this;
     }
@@ -68,11 +74,12 @@ class Bundler extends Fs
         return $this;
     }
 
-    public function updateFileContent($file_path, $data_ref)
+    public function updateFileContent($intended_data)
     {
         echo $this->notifier("Updatating files data...");
 
-        $this->updateFile($file_path, $data_ref);
+		$data = (new SchemaParser($this->path, $intended_data))->parseData();
+        $this->updateFile($this->path, $this->prod_repo, $data);
 
         return $this;
     }

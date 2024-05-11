@@ -50,18 +50,22 @@ class Fs
 		);
 	}
 
-    protected function updateFile($path, $data_ref)
+    protected function updateFile($root_path, $prod_repo, $data)
     {
-        $file_data = file_get_contents($path);
-        $file = fopen($path, 'w');
+		foreach ($data as $file_name => $file_data) {
+			$file_relative_path = $file_data['path'] . '/' . $file_name . "." . $file_data['extension'];
+			$resource_file_path = $root_path . $file_relative_path;
+			$intended_file_path =  "$root_path/prod/$prod_repo" . $file_relative_path;
 
-        foreach ($data_ref as $key => $data) {
-			if ('route' == $key) continue;
+			$intended_file_content = file_get_contents($resource_file_path);
+			$intended_file = fopen($intended_file_path, 'w');
 
-            $file_data = str_replace($data['old_data'], $data['updated_data'], $file_data);
+			foreach ($file_data['schema'] as $schema) {
+				$intended_file_content = str_replace($schema['target'], $schema['template'], $intended_file_content);
+			}
+
+			fwrite($intended_file, $intended_file_content, strlen($intended_file_content));
 		}
-        fwrite($file, $file_data, strlen($file_data));
-        fclose($file);
     }
 
 	public function copy($resource, $destination)
