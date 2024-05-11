@@ -29,7 +29,8 @@ composer require codesvault/wp-bundler --dev
 
 ## Setup
 
-Create a `bundler` file in the root folder of your plugin. Add the below code in the file.
+Create a `bundler` file in the root folder of your plugin. E.g. `wp-content/plugins/kathamo/bundler`.
+Add the below code in the file.
 
 ```php
 #!/usr/bin/env php
@@ -84,12 +85,18 @@ $bundler
 It's creating a repo in the `/prod` folder then running build `command` then 'cleaning' up the repo based on `.distignore` and finally making a zip.
 
 <br>
+<br>
+
+## Update File content
 
 You can also update specific file data before making zip using `updateFileContent` api.
 
 <!-- TODO: add doc -->
 
 <br>
+<br>
+
+## Find and Replace
 
 Update entire plugin file's data using `findAndReplace` api.
 
@@ -107,6 +114,9 @@ $bundler
 ```
 
 <br>
+<br>
+
+## Envirnoment variables
 
 Get env file data using WP Bundler.
 
@@ -122,22 +132,32 @@ if ('true' === $env->getenv('DEV_MODE')) {
 ```
 
 <br>
+<br>
 
-## Multiple Zip
+## Multiple Zips
 
 When you want to create multiple zip, use `buildIterator` api.
 
 ```php
-$production_repos = [
-  "feed-pro-basic",
-  "feed-pro-plus",
-];
+// .env file
+TIERS_PID="basic:123,plus:231,pro:3240"
+
+
+// bundler file
+$setup = Setup::loadEnv(__DIR__, '.env');
+$tiers_pids = $setup->mapTiersAndProductIds($setup->getEnv('TIERS_PID'));
 
 $bundler
-  ->buildIterator($production_repos, function($repo_name, $builder) {
+  ->createProductionRepo('kathamo')
+  ->command("composer install --no-dev")
+  ->command("npm install")
+  ->command("npm run build")
+  ->cleanUp()
+  ->buildIterator($tiers_pids, function($meta, $builder) {
+    $zip_name = "kathamo-" . ucfirst($meta['tier']) . "-" . $meta['product_id'];
+
     $builder
-      ->createProductionRepo($repo_name)
       ->command("composer install --no-dev")
-      ... ..
+      ->zip($zip_name);
   });
 ```
