@@ -42,12 +42,8 @@ class Bundler extends Fs
         echo $this->notifier("{$zip_name}.zip created...");
 
 		echo $this->notifier("Smashed it! 💥", "warning");
-		echo $this->notifier("... ... .. \nPreparing next build...", "warning");
 
-		$schema_files = (new SchemaParser($this->path))->getSchemaFilesPath();
-		foreach ($schema_files as $file) {
-			$this->copy($this->path . "/$file", $this->prod_path . "/$file");
-		}
+		$this->restoreDefaultFiles($this->path, $this->prod_path);
 
         return $this;
     }
@@ -92,7 +88,7 @@ class Bundler extends Fs
 			return;
 		}
 		if (! is_file("{$this->path}/.distignore")) {
-			echo $this->notifier(".distignore file not found...", "warning");
+			echo $this->notifier("'.distignore' file not found. Skipping cleanUp process...", "warning");
 			return;
 		}
 

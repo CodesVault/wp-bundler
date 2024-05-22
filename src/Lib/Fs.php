@@ -2,6 +2,7 @@
 
 namespace CodesVault\Bundle\Lib;
 
+use CodesVault\Bundle\SchemaParser;
 use Symfony\Component\Finder\Finder;
 
 class Fs
@@ -104,5 +105,21 @@ class Fs
 		}
 
 		return $this;
+	}
+
+	protected function restoreDefaultFiles($plugin_path, $prod_path)
+	{
+		if (! file_exists($plugin_path . '/bundler-schema.json')) {
+			return false;
+		}
+
+		$schema_files = (new SchemaParser($plugin_path))->getSchemaFilesPath();
+		if (empty($schema_files)) {
+			return false;
+		}
+
+		foreach ($schema_files as $file) {
+			$this->copy($plugin_path . "/$file", $prod_path . "/$file");
+		}
 	}
 }
