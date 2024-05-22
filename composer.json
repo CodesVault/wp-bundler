@@ -1,6 +1,6 @@
 {
     "name": "codesvault/wp-bundler",
-    "description": "WP Bundler is a CLI tool. It can configure and run build process, and bundle zip(s) for WordPress plugins.",
+    "description": "WP Bundler is a CI/CD tool. It can configure and run build process, and bundle zip(s) for WordPress plugins.",
     "version": "1.0.1",
     "minimum-stability": "stable",
     "type": "library",

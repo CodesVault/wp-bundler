@@ -2,7 +2,7 @@
 
 Build dependencies & Bundle production ready plugin.
 <br>
-WP Bundler is a CLI tool. It can configure and run build process, and bundle zip(s) for WordPress plugins.
+WP Bundler is a CI/CD tool. It can configure and run build process, and bundle zip(s) for WordPress plugins.
 
 <br>
 
