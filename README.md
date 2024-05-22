@@ -78,7 +78,8 @@ $bundler
     ->command("npm install")
     ->command("npm run build")
     ->cleanUp()
-    ->zip('kathamo');
+    ->zip('kathamo')
+    ->executionTime();
 ```
 
 <br>
@@ -240,7 +241,8 @@ $bundler
 
     $builder
       ->zip($zip_name);
-  });
+  })
+  ->executionTime();
 ```
 
 <br>
@@ -279,5 +281,6 @@ $bundler
         ]
       ])
       ->zip($zip_name);
-  });
+  })
+  ->executionTime();
 ```
