@@ -89,7 +89,7 @@ class Fs
 		return $this;
 	}
 
-	public function replaceAll($files, $data_ref)
+	protected function replaceAll($files, $data_ref)
 	{
 		foreach ($files as $file) {
 			$file_path = $file->getRealPath();

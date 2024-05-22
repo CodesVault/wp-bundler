@@ -5,7 +5,7 @@
  * Author: Keramot UL Islam, CodesVault
  * Developer: Keramot UL Islam
  *
- * @version 1.0.0
+ * @version 1.0.1
  */
 
 require 'vendor/autoload.php';
