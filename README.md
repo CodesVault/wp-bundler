@@ -83,7 +83,7 @@ $bundler
 
 <br>
 
-It's creating a repo in the `/prod` folder then running build `command` then 'cleaning' up the repo based on `.distignore` and finally making a zip.
+It's creating a repo in the `/pluginName/prod` folder then running build `command` then 'cleaning' up the repo based on `.distignore` and finally making a zip.
 
 <br>
 <br>
@@ -93,6 +93,13 @@ It's creating a repo in the `/prod` folder then running build `command` then 'cl
 Get env file data using WP Bundler.
 
 ```php
+
+// .env file
+DEV_MODE='true'
+TIERS_PRODUCTIDS="basic:1722795,plus:1722797,elite:1722799"
+
+
+// bundler file
 $env = CodesVault\Bundle\Setup::loadEnv(__DIR__, '.env');
 
 if ('true' === $env->getenv('DEV_MODE')) {
@@ -101,6 +108,22 @@ if ('true' === $env->getenv('DEV_MODE')) {
     ->command("npm install")
     ->command("npm run build");
 }
+
+$tiers_pids = $setup->kv($setup->getEnv('TIERS_PID'));
+// array (
+//   [
+//     'key'   => 'basic',
+//     'value' => '1722795',
+//   ],
+//   [
+//     'key'   => 'plus',
+//     'value' => '1722797',
+//   ],
+//   [
+//     'key'   => 'elite',
+//     'value' => '1722799',
+//   ],
+// );
 ```
 
 <br>
@@ -204,7 +227,7 @@ TIERS_PID="basic:123,plus:231,pro:3240"
 
 // bundler file
 $setup = Setup::loadEnv(__DIR__, '.env');
-$tiers_pids = $setup->mapTiersAndProductIds($setup->getEnv('TIERS_PID'));
+$tiers_pids = $setup->kv($setup->getEnv('TIERS_PID'));
 
 $bundler
   ->createProductionRepo('kathamo')
@@ -213,10 +236,48 @@ $bundler
   ->command("npm run build")
   ->cleanUp()
   ->buildIterator($tiers_pids, function($meta, $builder) {
-    $zip_name = "kathamo-" . ucfirst($meta['tier']) . "-" . $meta['product_id'];
+    $zip_name = "kathamo-" . $meta['key'] . "-" . $meta['value'];
 
     $builder
-      ->command("composer install --no-dev")
+      ->zip($zip_name);
+  });
+```
+
+<br>
+<br>
+
+## Example
+
+Here is an example of a `bundler` file.
+
+```php
+#!/usr/bin/env php
+<?php
+// data loaded from .env file
+$setup = Setup::loadEnv(__DIR__, '.env');
+$tiers_pids = $setup->kv($setup->getEnv('TIERS_PID'));
+
+$bundler
+  ->createProductionRepo('kathamo')
+  ->command("composer install --no-dev")
+  ->command("npm install")
+  ->command("npm run build")
+  ->cleanUp()
+  ->buildIterator($tiers_pids, function($meta, $builder) {
+    $zip_name = "kathamo-" . $meta['key'] . "-" . $meta['value'];
+    $intended_data = [
+      "tier_name"       => $meta['tier'],
+      "release_version" => $setup->getEnv('RELEASE_VERSION'),
+    ];
+
+    $builder
+      ->updateFileContent($intended_data)
+      ->findAndReplace([
+        [
+          'find'          => "use Kathamo\\Bundle\\Bundler;",
+          'updated_data'  => "use CodesVault\\Kathamo\\Bundle\\Bundler;",
+        ]
+      ])
       ->zip($zip_name);
   });
 ```

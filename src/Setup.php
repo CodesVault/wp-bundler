@@ -21,17 +21,20 @@ class Setup
         return $_ENV;
     }
 
-	public function mapTiersAndProductIds($env)
+	public function kv($env)
 	{
-		$tier_pid_list = explode(',', $env);
+		$kv_list = explode(',', $env);
 		$maped_data = array_map(function($list_item) {
-			$tier_pid = explode(':', $list_item);
+			if (strpos($list_item, ':') === false) {
+				return false;
+			}
+			$item = explode(':', $list_item);
 
 			return [
-				'tier'			=> $tier_pid[0],
-				'product_id'	=> $tier_pid[1]
+				'key'	=> $item[0] ?? '',
+				'value'	=> $item[1] ?? '',
 			];
-		}, $tier_pid_list);
+		}, $kv_list);
 
 		return $maped_data;
 	}
