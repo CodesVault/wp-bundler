@@ -66,9 +66,6 @@ assets/dev
 
 ## Uses
 
-Now Let's add build pipeline in the above `bundler` file like below. Then from terminal run `php bundler` to create a production zip.
-
-
 ```php
 // basic uses
 
@@ -80,6 +77,12 @@ $bundler
     ->cleanUp()
     ->zip('kathamo')
     ->executionTime();
+```
+
+Now Let's add build pipeline in the above `bundler` file using this codes. Then from terminal `cd` into plugin's folder and run the below command to create a production zip.
+
+```bash
+php bundler
 ```
 
 <br>
