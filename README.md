@@ -39,7 +39,7 @@ Add the below code in the file.
 use CodesVault\Bundle\Bundler;
 use CodesVault\Bundle\Setup;
 
-require __DIR__ . "/vendor/codesvault/wp-bundler/autoload.php";
+require __DIR__ . "/vendor/autoload.php";
 
 $bundler = new Bundler(__DIR__);
 ```
@@ -258,6 +258,9 @@ Here is an example of a `bundler` file.
 ```php
 #!/usr/bin/env php
 <?php
+
+require __DIR__ . "/vendor/autoload.php";
+
 // data loaded from .env file
 $setup = Setup::loadEnv(__DIR__, '.env');
 $tiers_pids = $setup->kv($setup->getEnv('TIERS_PID'));
@@ -268,6 +271,8 @@ $bundler
   ->command("npm install")
   ->command("npm run build")
   ->cleanUp()
+  ->copy('/schema.json', '/schema.json')
+  ->renameProdFile('kathamo.php', 'kathamo-pro.php')
   ->buildIterator($tiers_pids, function($meta, $builder) {
     $zip_name = "kathamo-" . $meta['key'] . "-" . $meta['value'];
     $intended_data = [
