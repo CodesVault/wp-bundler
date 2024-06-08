@@ -7,8 +7,14 @@ use Symfony\Component\Finder\Finder;
 
 class Fs
 {
+	protected $path;
+    protected $prod_path = null;
+
     protected function makeProductionDirectory($path, $prod_path)
     {
+		$this->path = $path;
+		$this->prod_path = $prod_path;
+
         $finder = new Finder();
         $finder->in($path);
 
@@ -69,15 +75,54 @@ class Fs
 		}
     }
 
+	/**
+	 * Copy file from source to destination
+	 *
+	 * @param string $resource - source file relative path
+	 * @param string $destination - destination file relative path
+	 *
+	 * @return $this
+	 */
 	public function copy($resource, $destination)
 	{
-		copy($resource, $destination);
+		copy($this->path . $resource, $this->prod_path . $destination);
 		return $this;
 	}
 
+	/**
+	 * Copy file from source to destination
+	 *
+	 * @param string $path - relative path in /prod directory
+	 *
+	 * @return $this
+	 */
 	public function makeDir($path)
 	{
-		mkdir($path);
+		mkdir($this->prod_path . $path);
+		return $this;
+	}
+
+	/**
+	 * Rename production file in /prod/pluginName/ destination
+	 *
+	 * @param string $currentFileName - source file name with extension
+	 * @param string $fileName - destination file name with extension
+	 * @param string $filePath - source's relative file path
+	 * 
+	 * @return $this
+	 */
+	public function renameProdFile($currentFileName, $fileName, $filePath = '')
+	{
+		mkdir($this->prod_path . '/temp');
+
+		$currentFile = $this->prod_path . $filePath . "/" . $currentFileName;
+		$newFile = $this->prod_path . $filePath . "/" . $fileName;
+		$tempFile = $this->prod_path . "/temp/" . $fileName;
+
+		rename($currentFile, $tempFile);
+		copy($tempFile, $newFile);
+		system("rm -rf " . $this->prod_path . '/temp');
+
 		return $this;
 	}
 
