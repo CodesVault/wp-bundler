@@ -43,7 +43,7 @@ class Bundler extends Fs
 
 		echo $this->notifier("Smashed it! 💥", "warning");
 
-		$this->restoreDefaultFiles($this->path, $this->prod_path);
+		$this->restoreDefaultFiles($this->path);
 
         return $this;
     }

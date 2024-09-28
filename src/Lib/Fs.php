@@ -152,7 +152,7 @@ class Fs
 		return $this;
 	}
 
-	protected function restoreDefaultFiles($plugin_path, $prod_path)
+	protected function restoreDefaultFiles($plugin_path)
 	{
 		if (! file_exists($plugin_path . '/bundler-schema.json')) {
 			return false;
@@ -164,7 +164,7 @@ class Fs
 		}
 
 		foreach ($schema_files as $file) {
-			$this->copy($plugin_path . "/$file", $prod_path . "/$file");
+			$this->copy("/$file", "/$file");
 		}
 	}
 }
