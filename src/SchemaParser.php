@@ -28,10 +28,13 @@ class SchemaParser
 
 		foreach ($this->file_content as &$file_data) {
 			foreach ($file_data['schema'] as $file_key => $block) {
-				$get_var = $block['template'];
-				preg_match('/{{(.*?)}}/', $get_var, $matches);
+				preg_match('/{{(.*?)}}/', $block['target'], $target_matches);
+				preg_match('/{{(.*?)}}/', $block['template'], $template_matches);
 
-				$file_data['schema'][$file_key]['template'] = str_replace($matches[0], $this->intended_data[$matches[1]], $block['template']);
+				$file_data['schema'][$file_key] = [
+					'target'	=> $target_matches ? str_replace($target_matches[0], $this->intended_data[$target_matches[1]], $block['target']) : $block['target'],
+					'template'	=> str_replace($template_matches[0], $this->intended_data[$template_matches[1]], $block['template']),
+				];
 			}
 		}
 
