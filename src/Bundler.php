@@ -102,6 +102,7 @@ class Bundler extends Fs
 		}
 
         foreach ($ignoreFiles as $path) {
+            $path = trim($path);
 			if (empty($path)) {
 				continue;
 			}
