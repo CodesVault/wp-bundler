@@ -24,15 +24,15 @@ class Bundler extends Fs
 		$this->start_execution_time = microtime(true);
     }
 
-    public function command($command)
+    public function command($command, $callback_arg = null)
     {
         if (is_callable($command)) {
-            (new Command())->execute($command, $this->prod_path);
+            (new Command())->execute($command, $callback_arg, $this->prod_path);
             return $this;
         }
 
 		echo $this->notifier("Running: {$command}");
-        (new Command())->execute($command, $this->prod_path);
+        (new Command())->execute($command, $callback_arg, $this->prod_path);
         return $this;
     }
 

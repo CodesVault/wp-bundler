@@ -11,7 +11,7 @@ class Command
 		system($command);
     }
 
-    public function execute($command, $prodPath = null)
+    public function execute($command, $callback_arg = null, $prodPath = null)
     {
         if (! $prodPath) {
             $this->create($command);
@@ -25,7 +25,7 @@ class Command
             }
 
             echo $this->notifier($notification_msg);
-            $result = $command();
+            $result = call_user_func($command, $callback_arg);
             
             if (is_string($result)) {
                 echo $this->notifier("{$result}");
