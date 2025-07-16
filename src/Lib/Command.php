@@ -13,11 +13,6 @@ class Command
 
     public function execute($command, $callback_arg = null, $prodPath = null)
     {
-        if (! $prodPath) {
-            $this->create($command);
-            return;
-        }
-
         if (is_callable($command)) {
             $notification_msg = "Running: command as callable";
             if (is_string($command)) {
@@ -31,6 +26,11 @@ class Command
                 echo $this->notifier("{$result}");
             }
 
+            return;
+        }
+
+        if (! $prodPath) {
+            $this->create($command);
             return;
         }
 
