@@ -26,12 +26,13 @@ class Bundler extends Fs
 
     public function command($command)
     {
-		echo $this->notifier("Running: {$command}");
-        if ($this->prod_path === null) {
-            (new Command())->create($command);
+        if (is_callable($command)) {
+            (new Command())->execute($command, $this->prod_path);
             return $this;
         }
-        (new Command())->create("cd {$this->prod_path} && $command");
+
+		echo $this->notifier("Running: {$command}");
+        (new Command())->execute($command, $this->prod_path);
         return $this;
     }
 
