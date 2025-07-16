@@ -258,10 +258,9 @@ You can also use callable or callback function as command. It will be executed i
 ```php
 $bundler
   ->createProductionRepo('kathamo')
-  ->command('foo')
+  ->command('foo', $env) // foo is a callable function with $env parameter
   ->command(function() {
     echo "Hello world!\n";
-    return foo();
   })
   ->cleanUp()
   ->buildIterator($tiers_pids, function($meta, $builder) {
