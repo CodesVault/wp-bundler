@@ -19,11 +19,16 @@ class Command
         }
 
         if (is_callable($command)) {
-            echo $this->notifier("Running: command as callable `{$command}`");
-            $command = $command();
-            
+            $notification_msg = "Running: command as callable";
             if (is_string($command)) {
-                echo $this->notifier("{$command}");
+                $notification_msg .= " `{$command}`";
+            }
+
+            echo $this->notifier($notification_msg);
+            $result = $command();
+            
+            if (is_string($result)) {
+                echo $this->notifier("{$result}");
             }
 
             return;

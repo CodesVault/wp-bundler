@@ -251,6 +251,37 @@ $bundler
 <br>
 <br>
 
+## Callable Function as command
+
+You can also use callable or callback function as command. It will be executed in the prod repo folder.
+
+```php
+$bundler
+  ->createProductionRepo('kathamo')
+  ->command('foo')
+  ->command(function() {
+    echo "Hello world!\n";
+    return foo();
+  })
+  ->cleanUp()
+  ->buildIterator($tiers_pids, function($meta, $builder) {
+    $zip_name = "kathamo-" . $meta['key'] . "-" . $meta['value'];
+
+    $builder
+      ->zip($zip_name);
+  })
+  ->executionTime();
+
+
+function foo() {
+  // Do something here
+}
+
+```
+
+<br>
+<br>
+
 ## Example
 
 Here is an example of a `bundler` file.
